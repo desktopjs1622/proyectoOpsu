@@ -1,0 +1,70 @@
+<div class="modal-dialog" id="empresa">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"> {{ titulo }} {{ object.persona }}</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url('grado:grad_delete', args=[object.id, object.actogrado.pk]) }}" method="post">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <table class="table">
+                    <tr>
+                        <th><i class="fa fa-user"></i>&nbsp;&nbsp;Nombre - Apellido</th>
+                        <td class="text-right">{{ object.persona }}</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-credit-card"></i>&nbsp;&nbsp;Cedula</th>
+                        <td class="text-right">{{ object.persona }}</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-edit"></i>&nbsp;&nbsp;Carrera</th>
+                        <td class="text-right">{{ object.carrera }}</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-fw fa-graduation-cap"></i>&nbsp;&nbsp;Acto de Grado - Nro de Acta</th>
+                        <td class="text-right">{{ object.actogrado.num_acta_format }}</td>
+                    </tr>
+                    {% if object.num_asignado != None %}
+                    <tr>
+                        <th><i class="fa fa-hashtag"></i>&nbsp;&nbsp;Nro de Asignado</th>
+                        <td class="text-right">{{ object.num_asignado }}</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-file"></i>&nbsp;&nbsp;Nro de Folio</th>
+                        <td class="text-right">{{ object.folio }}</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-book"></i>&nbsp;&nbsp;Tomo</th>
+                        <td class="text-right">{{ object.libro }}</td>
+                    </tr>
+                    {% endif %}
+                    
+                </table>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button title="Eliminar registros de {{ object.persona }}" type="submit" class="btn btn-{{ tag }} pull-right">
+                        <i class="fa fa-{{ label }}"></i>
+                    </button>
+                </div>
+                </form>
+            </div>
+            
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<script> 
+        //Date picker
+        $('#id_fecha_acto').datepicker({
+            autoclose: true,
+            startDate: "now",
+            format: "dd/mm/yyyy",
+            language: "es"
+        })
+    </script>

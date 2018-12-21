@@ -1,0 +1,32 @@
+<div class="modal-info modal-dialog" id="institucion_ministerial">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Detalle {{ titulo }}</h4>
+            </div>
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>Nombre de la Institución:</dt>
+                    <dd>{{ detalle.nombre }}</dd>
+                    <dt>Siglas:</dt>
+                    <dd>{{ detalle.siglas }}</dd>
+                    <dt>Rif:</dt>
+                    <dd>{{ detalle.rif }}</dd>
+                    <dt>Dependencia Administrativa:</dt>
+                    <dd>{{ detalle.dep_admin }}</dd>
+                    <dt>Tipo Institución:</dt>
+                    <dd>{{ detalle.tipo_institucion }}</dd>
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

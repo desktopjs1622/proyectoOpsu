@@ -1,0 +1,52 @@
+<div class="modal-dialog modal-side modal-top-right" id="area_conocimiento">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{% if object %}Editar {% else %}Agregar {% endif %} {{ titulo }}</h4>
+            </div>
+            {% if object %}
+                <form class="form-horizontal" method="POST" role="form" action="{{ request.path }}">
+            {% else %}
+                <form class="form-horizontal" method="POST" role="form" action="{{ request.path }}">
+            {% endif %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="{{ form.nombre_area_conocimiento.id_for_label }}" class="col-sm-3 control-label">Nombre</label>
+                    <div class="col-sm-9">
+                        <input {% if object %}value="{{ form.nombre_area_conocimiento.value() }}"{% endif %} type="text" name="{{ form.nombre_area_conocimiento.name }}" required placeholder="Nombre del {{ titulo }}" class="form-control" id="{{ form.nombre_area_conocimiento.id_for_label }}" maxlength="50" />
+                    </div>
+                    <span class="help-block">
+                        {% for error in form.nombre_area_conocimiento.errors %}
+                            <ul>
+                                <li class="text-red">{{ error }}</li>
+                            </ul>
+                        {% endfor %}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.descripcion.id_for_label }}" class="col-sm-3 control-label">Descripción</label>
+                    <div class="col-sm-9">
+                        <textarea name="{{ form.descripcion.name }}" placeholder="Descripción del {{ titulo }}" rows="5" required cols="40" class="form-control" id="{{ form.descripcion.id_for_label }}">{% if object %}{{ form.descripcion.value() }}{% endif %}</textarea>
+                    </div>
+                    <span class="help-block">
+                        {% for error in form.descripcion.errors %}
+                            <ul>
+                                <li class="text-red">{{ error }}</li>
+                            </ul>
+                        {% endfor %}
+                    </span>
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary pull-right">{%if object %}Editar{% else %}Agregar{% endif %} </button>
+            </div>
+              <!-- /.box-footer -->
+        </form>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->

@@ -1,0 +1,42 @@
+<div class="modal-info modal-dialog" id="tipo_ieu_detalle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Detalle Tipo Específico IEU</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-7">
+                        <dl class="dl-horizontal">
+                            <dt>Tipo de IEU:</dt>
+                            <dd>{{ object.tipo_ieu }}</dd>
+                            <dt>Sub Tipo de IEU:</dt>
+                            <dd>{{ object.sub_tipo_ieu }}</dd>
+                            <dt>Tipo Específico de IEU:</dt>
+                            <dd>{{ object.tipo_especifico_ieu }}</dd>
+                            <dt>IEU:</dt>
+                            <dd>{{ object }}</dd>
+                            <dt>Siglas IEU:</dt>
+                            <dd>{{ object.institucion_ministerial.siglas }}</dd>
+                            <dt>Dependencia Admin:</dt>
+                            <dd>{{ object.institucion_ministerial.dep_admin }}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-5">
+                        <a href="{{ object.logo.url }}" target="blank"><img class="img-responsive" src="{{ object.logo.url }}" alt="{{ object }}"></a>
+                    </div>
+                </div>
+                <a href="{{ object.fachada.url }}" target="blank"><img class="img-responsive pad" src="{{ object.fachada.url }}" alt="{{ object }}"></a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

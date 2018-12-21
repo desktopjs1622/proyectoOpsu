@@ -1,0 +1,102 @@
+{% extends "base_jinja.html" %}
+
+{% block title %} {{ titulo }} {% endblock title %}
+
+{% block stylesheets %}
+    {{ super() }}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ static('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ static('bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ static('bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}">
+    <style>
+        .mytex {
+            min-width: 80px !important;
+        }
+        span {
+            display: inline-block;
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                IEU:
+                <small>{{ titulo }}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Resumen LOEU</a></li>
+                <li><a href="{{ url('globales:listar-institucion-ministerial') }}">{{ titulo }}</a></li>
+                <li class="active">{% if object %}Editar {% else %}Agregar {% endif %}</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="col-md-12">
+                <div class="box box-success">
+                    {% if object %}
+                        <form class="form-horizontal" method="POST" role="form" action="{{ request.path }}" enctype="multipart/form-data">
+                    {% else %}
+                        <form class="form-horizontal" method="POST" role="form" action="{{ request.path }}" enctype="multipart/form-data">
+                    {% endif %}
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        <div class="box-body">
+                            {% for field in form %}
+                                <div class="form-group">
+                                    <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">{{ field.label }}</label>
+                                    <div class="col-sm-9">
+                                        {{ field }}
+                                    </div>
+                                    <span class="help-block">
+                                        {% for error in field.errors %}
+                                            <ul>
+                                                <li class="text-red">{{ error }}</li>
+                                            </ul>
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary pull-right">{% if object %}Editar {% else %}Agregar {% endif %}</button>
+                        </div>
+                        <!-- /.box-footer -->
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+{% endblock content %}
+
+{% block javascripts %}
+    {{ super() }}
+    <!-- DataTables -->
+    <script src="{{ static('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ static('bower_components/jszip/dist/jszip.min.js') }}"></script>
+    <script src="{{ static('bower_components/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script src="{{ static('bower_components/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
+
+    <!-- page script -->
+
+    <!-- InputMask -->
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.js') }}"></script>
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
+    <script>
+        $('[data-mask]').inputmask()
+        $('#id_rif').inputmask('A-99999999-9')
+    </script>
+
+{% endblock javascripts %}

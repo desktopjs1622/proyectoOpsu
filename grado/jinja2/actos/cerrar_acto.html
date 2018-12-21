@@ -1,0 +1,55 @@
+<div class="modal-dialog" id="empresa">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"> {{ titulo }} {{ object.num_acta_format }}</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url('grado:act_close', args=[object.id]) }}" method="post">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <table class="table">
+                    <tr>
+                        <th><i class="fa fa-map-marker"></i>&nbsp;&nbsp;Localidad</th><td class="text-right"> {{  object.localidad }}</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-calendar"></i>&nbsp;&nbsp;Fecha</th><td class="text-right">{{ object.fecha_acto.strftime('%d de %B de %Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-hashtag"></i>&nbsp;&nbsp;Acto</th><td class="text-right">{{ object.num_acta_format }}</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-play"></i>&nbsp;&nbsp;Status</th><td class="text-right">{% if object.status == True %}Activo <i class="fa fa-toggle-on"></i>{% else %} Inactivo <i class="fa fa-toggle-off"></i>{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa fa-users"></i>&nbsp;&nbsp;Total de Participantes</th><td class="text-right">{{ participantes.count() }}</td>
+                    </tr>
+                    
+                </table>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button title="Cerrar este acto de grado" type="submit" class="btn btn-{{ tag }} pull-right">
+                        <i class="fa fa-{{ label }}"></i>
+                    </button>
+                </div>
+                </form>
+            </div>
+            
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<script> 
+        //Date picker
+        $('#id_fecha_acto').datepicker({
+            autoclose: true,
+            startDate: "now",
+            format: "dd/mm/yyyy",
+            language: "es"
+        })
+    </script>

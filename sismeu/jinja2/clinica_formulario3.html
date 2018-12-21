@@ -1,0 +1,156 @@
+{% extends "base_jinja.html" %}
+
+{% block title %} Viviendas de la Zona {% endblock title %}
+
+{% block stylesheets %}
+    {{ super() }}
+{% endblock stylesheets %}
+
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                IEU:
+                <small>{%if agregar %}Agregar{% else %}Editar{% endif %} Tipo de Institución de Educación Universitaria</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Resumen LOEU</a></li>
+                <li class="active"><a href="{{ url('oeu:listar-tipo-ieu') }}"> Tipo IEU</a></li>
+                <li class="active">{%if agregar %}Agregar{% else %}Editar{% endif %}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            {% if get_messages(request) %}
+                {% for message in get_messages(request) %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {% if message.tags == 'error' %}
+                            <h4><i class="icon fa fa-ban"></i> ¡Alerta!</h4>
+                        {% elif message.tags == 'warning' %}
+                            <h4><i class="icon fa fa-warning"></i> ¡Cuidado!</h4>
+                        {% elif message.tags == 'success' %}
+                            <h4><i class="icon fa fa-check"></i> ¡Exito!</h4>
+                        {% elif message.tags == 'info' %}
+                            <h4><i class="icon fa fa-info"></i> ¡Atención!</h4>
+                        {% endif %}
+                        {{ message|safe }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            {% if form.errors %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-ban"></i> ¡Alerta!</h4>
+                    {% for error in form.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="row">
+                <form class="form-horizontal" role="form" {% if not agregar %}action="{{ url('sismeu:editar-clinica', args=[object.pk]) }}"{% else %}action="{{ url('sismeu:agregar_clinica') }}"{% endif %} method="post">
+                    <div class="col-lg-6">
+                        <div class="box box-warning">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                            <div class="box-header">
+                                Tipo IEU valores en revisión
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                {% for field in form %}
+                                    <div class="form-group">
+                                        <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">{{ field.label }}</label>
+                                        <div class="col-sm-9">
+                                            {{ field }}
+                                        </div>
+                                        <span class="help-block">
+                                            {% for error in field.errors %}
+                                                <ul>
+                                                    <li class="text-red">{{ error }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-primary pull-right">{%if agregar %}Agregar{% else %}Editar{% endif %}</button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="box box-success">
+                            <div class="box-header">
+                                Soportes Formales de Cambios
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                {{ formset.management_form }}
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Departamento</th>
+                                            <th class='text-center'>Teléfono</th>
+                                            <th class='text-center'>Publicar</th>
+                                            <th class='text-center'>Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    {% for form in formset.forms %}
+                                        <tr class="formset_contacto">
+                                            {% for field in form.visible_fields() %}
+                                                <td class="text-center">
+                                                    {% if loop.first %}
+                                                        {% for hidden in form.hidden_fields() %}
+                                                            {{ hidden }}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                    {{ field.errors }}
+                                                    {{ field }}
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                </form>
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+{% endblock content %}
+
+{% block javascripts %}
+    {{ super() }}
+    <!-- InputMask -->
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.js') }}"></script>
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
+    <!-- FormSet -->  
+    <script src="{{ static('formset/jquery.formset.js') }}"></script>
+    <script src="{{ static('formset/jquery.formset.js') }}"></script>
+
+    <script type="text/javascript">
+        $('.formset_contacto').formset({
+            addText: 'Agregar Contacto',
+            deleteText: 'Eliminar',
+            prefix: 'telfclinica_set'
+        });
+
+        $('[data-mask]').inputmask()
+        $('#id_rif').inputmask('A-99999999-9')
+        $(':input[name^="telfclinica_set-2-telefono"]').inputmask('+58 (999) 999-99-99')
+    </script>
+{% endblock javascripts %}

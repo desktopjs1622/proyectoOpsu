@@ -1,0 +1,8 @@
+<!-- Menu para la aplicación PNI -->
+<li{% if 'snipni' in request.path %} class="active"{% endif %}>
+    <li{% if 'sni/seguidor-estado' in request.path %} class="active"{% endif %}>
+        <a href="{{ url('snipni:listar-seguidor-estado') }}"><i class="fa fa-circle-o"></i> Seguidor Estadal</a>
+    </li>
+    <li{% if '' in request.path %} class="active"{% endif %}>
+        <a href="#"><i class="fa fa-circle-o"></i> *** </a>
+    </li>

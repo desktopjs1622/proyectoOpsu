@@ -1,0 +1,57 @@
+<div class="modal-dialog" id="empresa">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">{{ titulo }} {% if object %} {{ object.persona.first_name|capitalize }} {{ object.persona.last_name|capitalize }} {% endif %}</h4>
+                </div>
+                {% if object %}
+                <form role="form" action="{{ url('grado:grad_edit', args=[object.id, object.actogrado.pk]) }}" method="post">
+                {% else %}
+                <form role="form" action="{{ url('grado:grad_create', args=[pk]) }}" method="post">
+                {% endif %}
+                    <div class="modal-body">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+                        <div class="form-group">
+                            <label>Cédula:</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                <i class="fa fa-credit-card"></i>
+                                </div>
+                                {{ form.persona }}
+                            </div>
+                        <!-- /.input group -->
+                        </div>
+
+                        <div class="form-group">
+                            <label>Carrera:</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                <i class="fa fa-credit-card"></i>
+                                </div>
+                                {{ form.carrera }}
+                            </div>
+                        <!-- /.input group -->
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">
+                                <i class="fa fa-times"></i>&nbsp;&nbsp;
+                            Cerrar
+                        </button>
+                        <button type="submit" class="btn btn-primary pull-right">
+                            <i class="fa fa-{{ accion }}"></i>&nbsp;&nbsp;
+                            {{ boton }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->

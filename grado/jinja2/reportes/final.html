@@ -1,0 +1,212 @@
+{% extends "base_jinja.html" %}
+
+{% block title %} Actos de Grado {% endblock title %}
+
+{% block stylesheets %}
+    {{ super() }}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ static('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ static('bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ static('bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}">
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content-wrapper">
+
+    <section class="content-header">
+        <h1>{{ acto.localidad }}</h1>
+        <ol class="breadcrumb">
+            <li><i class="fa fa-fw fa-graduation-cap"></i><a href="{{ url('grado:listar_acto_grado') }}"> Actos de Grado</a></li>
+            <li class="active">{{ fecha }}</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+
+        
+        {% if get_messages(request) %}
+            {% for message in get_messages(request) %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {% if message.tags == 'error' %}
+                        <h4><i class="icon fa fa-ban"></i> ¡Alerta!</h4>
+                    {% elif message.tags == 'warning' %}
+                        <h4><i class="icon fa fa-warning"></i> ¡Cuidado!</h4>
+                    {% elif message.tags == 'success' %}
+                        <h4><i class="icon fa fa-check"></i> ¡Exito!</h4>
+                    {% elif message.tags == 'info' %}
+                        <h4><i class="icon fa fa-info"></i> ¡Atención!</h4>
+                    {% endif %}
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-danger">
+                  <div class="box-header with-border">
+                    <h3 class="box-title"> <i class="fa fa-bank"></i> Acto académico nro. acta {{ acto.num_acta }}</h3>
+      
+                    <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                      </button>
+                    </div>
+                    <!-- /.box-tools -->
+                  </div>
+                  <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <center>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" colspan="2"><h3>IEU - Localidad <br>{{ acto.localidad }}</h3></th>
+                                            </tr>
+                                            <tr>
+                                                    <th class="text-center" colspan="2">
+                                                            {% if acto.status == False %}
+                                                            <h4>Cerrado</h4>
+                                                            {% else %}
+                                                            <h4>Abierto</h4>
+                                                            {% endif %}
+                                                        </th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Fecha</th>
+                                                <th class="text-center">Número de Acta</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">{{ acto.fecha_acto }}</td>
+                                                <td class="text-center">{{ numero_acta }}</td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </center>
+                            </div>
+                        </div>
+                    
+                    <table id="example" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                          <th> <i class="fa fa-user"></i> Nombre y Apellido </th>
+                          <th class="text-center"> <i class="fa fa-leanpub"></i> Carrera</th>
+                          <th class="text-center"> <i class="fa fa-book"></i> Tomo</th>
+                          <th class="text-center"> <i class="fa fa-file"></i>  Folio</th>
+                          <th class="text-center">  <i class="fa fa-list"></i>  Nro. Asignado</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for graduando in mis_graduandos %}
+                            <tr>
+
+                                <td>{{ graduando.persona }}</td>
+                                <td class="text-center">{{ graduando.carrera }}</td>
+                                <td class="text-center">{{ graduando.libro }}</td>
+                                <td class="text-center">{{ graduando.folio }}</td>
+                                <td class="text-center">{{ graduando.num_asignado }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+
+                                <th> <i class="fa fa-user"></i> Nombre y Apellido </th>
+                                <th class="text-center"> <i class="fa fa-leanpub"></i> Carrera</th>
+                                <th class="text-center"> <i class="fa fa-book"></i> Tomo</th>
+                                <th class="text-center"> <i class="fa fa-file"></i>  Folio</th>
+                                <th class="text-center">  <i class="fa fa-list"></i>  Nro. Asignado</th>
+                        </tr>
+                        </tfoot>
+                      </table>
+
+
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+              </div>
+        </div>
+
+    </section>
+
+
+    <div id="popup" class="modal fade" role="dialog"></div>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+    {{ super() }}
+
+
+    <script src="{{ static('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ static('bower_components/jszip/dist/jszip.min.js') }}"></script>
+    <script src="{{ static('bower_components/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script src="{{ static('bower_components/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
+
+    <script>    
+        function abrir_modal(url) {
+            $('#popup').load(url, function () {
+                $(this).modal('show');
+            });
+            return false;
+        }
+
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+
+                paging: true,
+                lengthChange: false,
+                searching: true,
+                ordering: true,
+                info: true,
+                autoWidth: false,
+                columnDefs: [{
+                    "targets": 3,
+                    "orderable": false
+                }],
+                language: {
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "Lo sentimos, no encontramos nada",
+                    info: "Mostrando la página _PAGE_ de _PAGES_",
+                    infoEmpty: "Sin registros disponibles",
+                    infoFiltered: "(Filtrados de untotal de _MAX_ registros)",
+                    search: "Buscar: ",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Previo"
+                    },
+                    buttons: {
+                        copy: "Copiar"
+                    },
+                    decimal: "-",
+                    thousands: "."
+                },
+                buttons: ['copy', 'csv', 'pdf']
+            });
+
+            table.buttons().container()
+                .appendTo('#example_wrapper .col-sm-6:eq(0)');
+
+        });
+    </script>
+{% endblock javascripts %}

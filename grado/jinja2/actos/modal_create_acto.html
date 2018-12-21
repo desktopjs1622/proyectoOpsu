@@ -1,0 +1,55 @@
+<div class="modal-dialog" id="empresa">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">{% if object %}Editar{% else %}Agregar{% endif %} Acto de Grado  </h4>
+                </div>
+                {% if object %}
+                <form role="form" action="{{ url('grado:act_edit', args=[object.id]) }}" method="post">
+                {% else %}
+                <form role="form" action="{{ url('grado:act_generate') }}" method="post">
+                {% endif %}
+                    <div class="modal-body">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        
+                        <div class="form-group">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                                </div>
+    
+                                <input class="form-control pull-right" name="fecha_acto" id="id_fecha_acto" type="text" value="{% if object %} {{ form2.fecha.value().strftime('%d/%m/%Y') }} {% endif %}">
+    
+                                <span class="help-block">
+                                        {% for error in form.fecha_acto.errors %}
+                                            <ul>
+                                                <li class="text-red">{{ error }}</li>
+                                            </ul>
+                                        {% endfor %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary pull-right">{% if object %}Editar{% else %}Agregar{% endif %}</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <script> 
+            //Date picker
+            $('#id_fecha_acto').datepicker({
+                autoclose: true,
+                startDate: "now",
+                format: "dd/mm/yyyy",
+                language: "es"
+            })
+        </script>

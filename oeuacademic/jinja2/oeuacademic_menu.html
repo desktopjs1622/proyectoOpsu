@@ -1,0 +1,13 @@
+<!-- Menu para la aplicación OEU -->
+<li class="treeview {% if 'loeu/programas-academicos' in request.path %}active{% endif %}">
+    <a href="#"><i class="fa fa-graduation-cap"></i> LOEU Prog. Académicos
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li class="{% if 'loeu/programas-academicos/area-de-conocimiento' in request.path %}active{% endif %}"><a href="{{ url('oeuacademic:listar-area-de-conocimiento') }}"><i class="fa fa-circle-o"></i> Áreas de Conocimientos</a></li>
+        <li class="{% if 'loeu/programas-academicos/sub-area-de-conocimiento' in request.path %}active{% endif %}"><a href="{{ url('oeuacademic:listar-sub-area-de-conocimiento') }}"><i class="fa fa-circle-o"></i> Sub áreas de Conocimientos</a></li>
+        <li class="{% if 'loeu/programas-academicos/pre-grado' in request.path %}active{% endif %}"><a href="{{ url('oeuacademic:listar-carrera-pre') }}"><i class="fa fa-circle-o"></i> Carrera</a></li>
+    </ul>
+</li>

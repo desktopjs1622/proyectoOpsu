@@ -1,0 +1,26 @@
+<div class="modal-info modal-dialog" id="tipo_turno_estudio">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Detalle {{ titulo }}</h4>
+                </div>
+                <div class="modal-body">
+                    <dl class="dl-horizontal">
+                        <dt> {{ titulo }}:</dt>
+                        <dd>{{ detalle.nombre_area_conocimiento }}</dd>
+                        <dt> Descripción :</dt>
+                        <dd>{{ detalle.descripcion }}</dd>
+                        </dl>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->

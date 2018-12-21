@@ -1,0 +1,27 @@
+<!-- Menu para la aplicación SISMEU -->
+<li{% if 'sismeu' in request.path %} class="active"{% endif %}>
+                            <a href="{{ url('sismeu:index') }}"><i class="fa fa-circle-o"></i> Home</a>
+                        </li>
+                        <li{% if 'sismeu/clinica' in request.path %} class="active"{% endif %}>
+                            <a href="{{ url('sismeu:vista_general') }}"><i class="fa fa-circle-o"></i> Clínicas</a>
+                        </li>
+                    {% if 'AdminSismeu' is in_user_group(request.user) %}
+                        <li{% if 'sismeu/region' in request.path %} class="active"{% endif %}>
+                            <a href="{{ url('sismeu:lista_region') }}"><i class="fa fa-circle-o"></i> Regiones</a>
+                        </li>
+                        <li{% if 'sismeu/motivo-inactivacion' in request.path %} class="active"{% endif %}>
+                            <a href="{{ url('sismeu:listar-motivo-clinica') }}"><i class="fa fa-circle-o"></i> Motivos de Inactivación</a>
+                        </li>
+                        <li{% if 'sismeu/departamento-clinica' in request.path %} class="active"{% endif %}>
+                            <a href="{{ url('sismeu:listar-departamento-clinica') }}"><i class="fa fa-circle-o"></i> Deptos. Clinicas</a>
+                        </li>
+                        <li{% if 'sismeu/convenio-clinica' in request.path %} class="active"{% endif %}>
+                            <a href="{{ url('sismeu:listar-convenio-clinica') }}"><i class="fa fa-circle-o"></i> Convenios</a>
+                        </li>
+                        <li{% if 'sismeu/auditoria' in request.path %} class="active"{% endif %}>
+                            <a href="{{ url('sismeu:lista-auditoria') }}"><i class="fa fa-circle-o"></i> Auditoria </a>
+                        </li>
+                        <li{% if 'sismeu' in request.path %} class="active"{% endif %}>
+                            <a href="{{ url('sismeu:vista_general') }}"><i class="fa fa-circle-o"></i> *** </a>
+                        </li>
+                    {% endif %}

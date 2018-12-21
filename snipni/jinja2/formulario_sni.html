@@ -1,0 +1,59 @@
+<!--<div class="modal fade" id="modal-default">-->
+    <div class="modal-default" id="seguidor_estadal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">{% if object %}Editar {% else %}Agregar {% endif %} {{ titulo }}</h4>
+                </div>
+            {% if object %}
+                <form role="form" action="{{ request.path }}" method="post">
+            {% else %}
+                <form role="form" action="{{ request.path }}" method="post">
+            {% endif %}
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <div class="modal-body">
+                        {% for campo in form %}
+                            <div class="form-group">
+                                <label for="{{ campo.id_for_label }}" class="col-sm-3 control-label">{{ campo.label }}</label>
+                                <div class="col-sm-9">
+                                        {{ campo }}
+                                    <span class="help-block">
+                                        {% for error in campo.errors %}
+                                            <ul>
+                                                <li class="text-red">{{ error }}</li>
+                                            </ul>
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                            </div><br>
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary pull-left" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-outline-secondary pull-right">Guardar</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    
+    <!-- jQuery 3 -->
+    <script src="{{ static('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="{{ static('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ static('bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+    <!-- Page script -->
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('#id_persona').select2()
+        $('#id_estado').select2()
+    })
+</script>

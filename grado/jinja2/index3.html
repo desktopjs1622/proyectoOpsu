@@ -1,0 +1,95 @@
+{% extends "base_jinja.html" %}
+
+{% block title %} Home {% endblock title %}
+
+{% block stylesheets %}
+    {{ super() }}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ static('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ static('bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ static('bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="{{ static('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+
+{% endblock stylesheets %}
+
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>MPPEUCT | OPSU | </h1>
+            <ol class="breadcrumb">
+                <li class="active"><a href="{{ url ('grado:index') }}"><i class="fa fa-fw fa-graduation-cap"></i> Home </a></li>
+                <li class="active"><a><i class="fa fa-time-o"></i> {{ fecha }} </a></li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-lg-6 col-xs-12">
+                    <!-- small box -->
+                    <div class="small-box bg-green">
+                      <div class="inner">
+                        <h3>{{ actos }}<sup style="font-size: 20px"></sup></h3>
+          
+                        <p>Actos de Grado en {{ annio_actual }}</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-university"></i>
+                      </div>
+                      <a href="{{ url ('grado:act_list') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                <!-- /.col -->
+
+                <div class="col-lg-6 col-xs-12">
+                    <!-- small box -->
+                    <div class="small-box bg-green">
+                      <div class="inner">
+                        <h3>{{ graduandos }}<sup style="font-size: 20px"></sup></h3>
+          
+                        <p>Graduandos registrados</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa fa-fw fa-graduation-cap"></i>
+                      </div>
+                      <a href="{{ url ('grado:act_list')}}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+
+                  
+
+            </div>
+            <!-- /.row -->            
+        </section>
+        <!-- /.content -->
+
+        
+
+        <div id="popup" class="modal fade" role="dialog"></div>
+    </div>
+    <!-- /.content-wrapper -->
+{% endblock content %}
+
+{% block javascripts %}
+    {{ super() }}
+    <!-- DataTables -->
+    <script src="{{ static('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ static('bower_components/jszip/dist/jszip.min.js') }}"></script>
+    <script src="{{ static('bower_components/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script src="{{ static('bower_components/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
+    <!-- bootstrap datepicker -->
+    <script src="{{ static('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+
+
+{% endblock javascripts %}

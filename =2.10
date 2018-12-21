@@ -1,0 +1,2 @@
+Requirement already satisfied: jinja2 in /var/www/envOpsu/lib/python3.5/site-packages (2.10)
+Requirement already satisfied: MarkupSafe>=0.23 in /var/www/envOpsu/lib/python3.5/site-packages (from jinja2) (1.0)

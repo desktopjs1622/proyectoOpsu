@@ -1,0 +1,44 @@
+<!-- Menu para la aplicación OEUCONFIG -->
+<li class="treeview {% if 'loeu/configuracion' in request.path %}active{% endif %}">
+    <a href="#"><i class="fa fa-gears"></i> LOEU Configuración
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li class="{% if 'loeu/configuracion/tipo-de-soporte-formal-de-cambio' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-sfc') }}"><i class="fa fa-circle-o"></i>Tipo SFC</a></li>
+        <li class="{% if 'loeu/configuracion/soporte-formal-de-cambio' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-soporte-formal-cambio') }}"><i class="fa fa-circle-o"></i>Soporte Formal de Cambio</a></li>
+        <li class="treeview {% if 'loeu/configuracion/ieu' in request.path %}active{% endif %}">
+            <a href="#"><i class="fa fa-building"></i> Conf. IEU
+                <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="{% if 'loeu/configuracion/ieu/tipo-ayuda-economica' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-ayuda-economica') }}"><i class="fa fa-circle-o"></i> Ayuda Económica</a></li>
+                <li class="{% if 'loeu/configuracion/ieu/tipo-actividades-culturales' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-actividad-cultural') }}"><i class="fa fa-circle-o"></i> Actividades Culturales</a></li>
+                <li class="{% if 'loeu/configuracion/ieu/tipo-disciplina-deportiva' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-disciplina-deportiva') }}"><i class="fa fa-circle-o"></i> Disciplina Deportiva</a></li>
+                <li class="{% if 'loeu/configuracion/ieu/tipo-organizacion-estudiantil' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-organizacion-estudiantil') }}"><i class="fa fa-circle-o"></i> Org. Estudiantil</a></li>
+                <li class="{% if 'loeu/configuracion/ieu/tipo-agrupacion-civica' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-agrupacion-civica') }}"><i class="fa fa-circle-o"></i> Agrupación Cívica</a></li>
+                <li class="{% if 'loeu/configuracion/ieu/tipo-redes-sociales' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-redes-sociales') }}"><i class="fa fa-circle-o"></i> Redes Sociales</a></li>
+                <li class="{% if 'loeu/configuracion/ieu/tipo-de-localidad' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-de-localidad') }}"><i class="fa fa-circle-o"></i> Tipo de Localidad</a></li>
+                <li class="{% if 'loeu/configuracion/ieu/tipo-de-instancia-administrativa' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-instancia-administrativa') }}"><i class="fa fa-circle-o"></i> Instancias Administrat.</a></li>
+                <li class="{% if 'loeu/configuracion/ieu/tipo-de-requisito-de-ingreso' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-de-requisito-ingreso') }}"><i class="fa fa-circle-o"></i> Requisito de Ingreso</a></li>
+                <li class="{% if 'loeu/configuracion/ieu/tipo-de-servicio' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-servicio') }}"><i class="fa fa-circle-o"></i> Servicio</a></li>
+            </ul>
+        </li>
+        <li class="treeview {% if 'loeu/configuracion/pfa' in request.path %}active{% endif %}">
+            <a href="#"><i class="fa fa-book"></i> Conf. Programas
+                <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="{% if 'loeu/configuracion/pfa/tipo-de-modalidad' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-de-modalidad') }}"><i class="fa fa-circle-o"></i> Modalidad</a></li>
+                <li class="{% if 'loeu/configuracion/pfa/tipo-de-titulo' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-titulo') }}"><i class="fa fa-circle-o"></i> Título</a></li>
+                <li class="{% if 'loeu/configuracion/pfa/tipo-de-carrera' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-carrera') }}"><i class="fa fa-circle-o"></i> Tipos de Carrera</a></li>
+                <li class="{% if 'loeu/configuracion/pfa/tipo-turno-de-estudio' in request.path %}active{% endif %}"><a href="{{ url('oeuconfig:listar-tipo-turno-de-estudio') }}"><i class="fa fa-circle-o"></i> Turno de Estudio</a></li>
+            </ul>
+        </li>
+    </ul>
+</li>

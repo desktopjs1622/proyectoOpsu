@@ -1,0 +1,39 @@
+<div class="modal-info modal-dialog" id="empresa">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title0"> ¿Usted va a Desactivar {{ clinica.nombre }}?</h4>
+            </div>
+            {% if clinica.pk %}
+            <form role="form" action="{{ url('sismeu:desactivar_clinica', args=[clinica.pk]) }}" method="post">
+                {% endif %}
+                <div class="modal-body">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <dl class="dl-vertical">
+                        <center><dt><h4>Clinica activa actualmente</h4></dt>
+                        <dt>Indique el motivo para desactivar la clinica.</dt></center>
+                        <br>
+                        <div class="form-group">
+                            <label for="{{ form.motivo_inactivacion.id_for_label }}" class="col-sm-3 control-label"></label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    {{ form.motivo_inactivacion }}
+                                </div>
+                            </div>
+                        </div>    
+                    </dl>
+                    <br><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary pull-right">desactivar</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

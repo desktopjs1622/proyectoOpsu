@@ -1,0 +1,35 @@
+<div class="modal-info modal-dialog" id="soporte-formal-cambio">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Detalle {{ titulo }}</h4>
+            </div>
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt> Tipo de {{ titulo }}:</dt>
+                    <dd>{{ detalle.tipo_sfc }}</dd>
+                    <dt> {{ titulo }}:</dt>
+                    <dd>{{ detalle.nombre }}</dd>
+                    <dt>Número de Oficio :</dt>
+                    <dd>{{ detalle.numero }}</dd>
+                    <dt>Número de Gaceta :</dt>
+                    <dd>{{ detalle.numero_gaceta }}</dd>
+                    <dt>Fecha de la Gaceta :</dt>
+                    <dd>{{ detalle.fecha_gaceta }}</dd>
+                    <dt>Documento Asociado :</dt>
+                    <dd>Para conocer el documento Asociado al Soporte Formal de Cambio <strong><em>"{{ detalle.nombre }}"</em></strong>, 
+                        Dar Click en: <a href="../../media/{{ detalle.archivo_adjunto }}" target="_blank"><strong>Observar</strong></a></dd>
+                    </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

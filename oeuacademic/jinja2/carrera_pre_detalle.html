@@ -1,0 +1,56 @@
+<div class="modal-info modal-dialog" id="carrera_detalle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Detalle de la Carrera</h4>
+            </div>
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>Localidad:</dt>
+                    <dd>{{ object.localidad_edit }}</dd>
+                    <dt>Nombre de la Carrera:</dt>
+                    <dd>{{ object.nombre_edit }}</dd>
+                    <dt>Descripción</dt>
+                    <dd><p ALIGN="justify">{{ object.descripcion_edit }}</p></dd>
+                    <dt>Título</dt>
+                    <dd>{{ object.titulo_edit }}</dd>
+                    <dt>Tipo de Carrera</dt>
+                    <dd>{{ object.tipo_carrera_edit }}</dd>
+                    <dt>Institución Acreditadora</dt>
+                    <dd>{{ object.ieu_acreditadora_edit }}</dd>
+                    <dt>Mercado Ocupacional</dt>
+                    <dd><p ALIGN="justify">{{ object.mercado_ocupacional_edit }}</p></dd>
+                    <dt>Área de Conocimiento</dt>
+                    <dd>{{ object.area_conocimiento_edit }}</dd>
+                    <dt>Sub Área de Conocimiento</dt>
+                    <dd>{{ object.sub_area_conocimiento_edit }}</dd>
+                    <dt>Campo Amplio</dt>
+                    <dd>{{ object.cine_f_campo_amplio_edit }}</dd>
+                    <dt>Campo Especifico</dt>
+                    <dd>{{ object.cine_f_campo_especifico_edit }}</dd>
+                    <dt>Campo Detallado</dt>
+                    <dd>{{ object.cine_f_campo_detallado_edit }}</dd>
+                    <dt>Duración</dt>
+                    <dd>{{ object.duracion_edit }}</dd>
+                    <dt>Modalidad</dt>
+                    <dd>{{ object.modalidad_edit }}</dd>
+                    <dt>Prioritaria</dt>
+                    {% if object.prioritaria_edit == True %}
+                    <dd>Activo</dd>
+                    {% else %}
+                    <dd>Inactivo</dd>
+                    {% endif %}
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

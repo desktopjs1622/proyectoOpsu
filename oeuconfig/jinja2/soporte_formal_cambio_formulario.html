@@ -1,0 +1,170 @@
+{% extends "base_jinja.html" %}
+
+{% block title %} {{ titulo }} {% endblock title %}
+
+{% block stylesheets %}
+    {{ super() }}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ static('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ static('bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ static('bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}">
+    <style>
+        .mytex {
+            min-width: 80px !important;
+        }
+        span {
+            display: inline-block;
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                IEU:
+                <small>{{ titulo }}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Resumen LOEU</a></li>
+                <li><a href="{{ url('oeuconfig:listar-soporte-formal-cambio') }}">{{ titulo }}</a></li>
+                <li class="active">{% if object %}Editar {% else %}Agregar {% endif %}</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="col-md-12">
+                <div class="box box-success">
+                    {% if object %}
+                        <form class="form-horizontal" method="POST" role="form" action="{{ request.path }}" enctype="multipart/form-data">
+                    {% else %}
+                        <form class="form-horizontal" method="POST" role="form" action="{{ request.path }}" enctype="multipart/form-data">
+                    {% endif %}
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        <div class="box-body">
+                            {% for field in form %}
+                                {% if field.name != 'archivo_adjunto' %}
+                                <div class="form-group">
+                                    <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">{{ field.label }}</label>
+                                    <div class="col-sm-9">
+                                        {{ field }}
+                                    </div>
+                                    <span class="help-block">
+                                        {% for error in field.errors %}
+                                            <ul>
+                                                <li class="text-red">{{ error }}</li>
+                                            </ul>
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="form-group">
+                                <label for="{{ form.archivo_adjunto.id_for_label }}" class="col-sm-3 control-label">Documento Adjunto</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group input-file" name="{{ form.archivo_adjunto.name }}" id="{{ form.archivo_adjunto.id_for_label }}" >
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary btn-choose" type="button">Examinar</button>
+                                        </span>
+                                        <input type="text" class="form-control" accept="application/pdf" placeholder='Seleccione un documento...' required />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-warning btn-reset" type="button">Reset</button>
+                                        </span>
+                                    </div>
+                                    <span class="help-block">
+                                        {% for error in form.archivo_adjunto.errors %}
+                                            <ul>
+                                                <li class="text-red">{{ error }}</li>
+                                            </ul>
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary pull-right">{% if object %}Editar {% else %}Agregar {% endif %}</button>
+                        </div>
+                        <!-- /.box-footer -->
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+{% endblock content %}
+
+{% block javascripts %}
+    {{ super() }}
+    <!-- DataTables -->
+    <script src="{{ static('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ static('bower_components/jszip/dist/jszip.min.js') }}"></script>
+    <script src="{{ static('bower_components/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script src="{{ static('bower_components/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
+    <!-- bootstrap datepicker -->
+    <script src="{{ static('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ static('bower_components/bootstrap-datepicker/js//locales/bootstrap-datepicker.es.js') }}"></script>
+    <!-- InputMask -->
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.js') }}"></script>
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
+    <!-- iCheck 1.0.1 -->
+    <script src="{{ static('plugins/iCheck/icheck.min.js') }}"></script>
+
+    <!-- page script -->
+
+    <script>
+
+        //Date picker
+        $('#id_fecha_gaceta').datepicker({
+            autoclose: true,
+            // startDate: "now",
+            format: "dd/mm/yyyy",
+            language: "es"
+        })
+
+        $("#id_numero").inputmask("Nº-9999999999");
+        $("#id_numero_gaceta").inputmask("99.999");
+
+        function bs_input_file() {
+            $(".input-file").before(
+                function() {
+                    if ( ! $(this).prev().hasClass('input-ghost') ) {
+                        var element = $("<input type='file' name='archivo_adjunto' id='id_archivo_adjunto' accept='application/pdf' class='input-ghost' style='visibility:hidden; height:0'>");
+                        element.change(function(){
+                            element.next(element).find('input').val((element.val()).split('\\').pop());
+                        });
+                        $(this).find("button.btn-choose").click(function(){
+                            element.click();
+                        });
+                        $(this).find("button.btn-reset").click(function(){
+                            element.val(null);
+                            $(this).parents(".input-file").find('input').val('');
+                        });
+                        $(this).find('input').css("cursor","pointer");
+                        $(this).find('input').mousedown(function() {
+                            $(this).parents('.input-file').prev().click();
+                            return false;
+                        });
+                        return element;
+                    }
+                }
+            );
+        }
+
+        $(function() {
+            bs_input_file();
+        });
+
+    </script>
+
+{% endblock javascripts %}

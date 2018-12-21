@@ -1,0 +1,55 @@
+<div class="modal-info modal-dialog" id="empresa">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title0">Agregar telefono a {{ clinica }}</h4>
+            </div>
+            {% if telefono %}
+                <form role="form" action="{{ url('sismeu:telefono-editar', args=[clinica.pk, telefono.pk]) }}" method="post">
+            {% else %}
+                <form role="form" action="{{ url('sismeu:telefono_clinica', args=[clinica.pk]) }}" method="post">
+            {% endif %}
+                <div class="modal-body">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Departamento</th>
+                                <th>Telefono</th>
+                                <th>Publicar</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>{{ form.departamento }}</td>
+                            <td>{{ form.telefono }}</td>
+                            <td>{{ form.publicar }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary pull-right">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+{% block javascripts %}
+    <!-- InputMask -->
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.js') }}"></script>
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
+    <script src="{{ static('formset/jquery.formset.js') }}"></script>
+    <script>
+        $('[data-mask]').inputmask()
+        $('#id_telefono').inputmask('+58 (999) 999-99-99')
+
+    </script>
+{% endblock javascripts %}

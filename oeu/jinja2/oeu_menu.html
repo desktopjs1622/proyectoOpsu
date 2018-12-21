@@ -1,0 +1,15 @@
+<!-- Menu para la aplicación OEU -->
+<li class="treeview {% if 'loeu/instituciones' in request.path %}active{% endif %}">
+    <a href="#"><i class="fa fa-building"></i> LOEU Instituciones
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li class="{% if 'loeu/instituciones/tipo-ieu' in request.path %}active{% endif %}"><a href="{{ url('oeu:listar-tipo-ieu') }}"><i class="fa fa-circle-o"></i> Tipo IEU</a></li>
+        <li class="{% if 'loeu/instituciones/sub-tipo-ieu' in request.path %}active{% endif %}"><a href="{{ url('oeu:listar-sub-tipo-ieu') }}"><i class="fa fa-circle-o"></i> Sub Tipo IEU</a></li>
+        <li class="{% if 'loeu/instituciones/tipo-especifico-ieu' in request.path %}active{% endif %}"><a href="{{ url('oeu:listar-tipo-especifico-ieu') }}"><i class="fa fa-circle-o"></i> Tipo Específico IEU</a></li>
+        <li class="{% if 'loeu/instituciones/ieu' in request.path %}active{% endif %}"><a href="{{ url('oeu:listar-ieu') }}"><i class="fa fa-circle-o"></i> Inst. Educ. Univ.</a></li>
+        <li class="{% if 'loeu/instituciones/localidad' in request.path %}active{% endif %}"><a href="{{ url('oeu:listar-localidad') }}"><i class="fa fa-circle-o"></i> Localidad IEU</a></li>
+    </ul>
+</li>

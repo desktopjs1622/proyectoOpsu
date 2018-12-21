@@ -1,0 +1,39 @@
+<div class="modal-info modal-dialog" id="vivienda_detalle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <center><h4 class="modal-title">Detalles del historico</h4></center>
+            </div>
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>Historico de la clinica:</dt>
+                    <dd>{{ historia.clinica.nombre.upper() }}</dd>
+                    <dt>Fecha de Activación:</dt>
+                    <dd>{{ historia.fecha_activacion }}</dd>
+                    <dt>Responsable de la Activación:</dt>
+                    <dd>{{ historia.responsable_activacion }}</dd>
+                    {% if historia.fecha_inactivacion == None %}
+
+                    {% else %}
+                    <dt>Fecha de Inactivación:</dt>
+                    <dd>{{ historia.fecha_inactivacion }} </dd>
+                    <dt>Motivo de Inactivación:</dt>
+                    <dd>{{ historia.motivo_inactivacion }}</dd>
+                    <dt>Responsable de la inactivación:</dt>
+                    <dd>{{ historia.responsable_inactivacion }} </dd>
+                    {% endif %}
+                </dl>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

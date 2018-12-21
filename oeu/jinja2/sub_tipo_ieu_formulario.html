@@ -1,0 +1,266 @@
+{% extends "base_jinja.html" %}
+
+{% block title %} Viviendas de la Zona {% endblock title %}
+
+{% block stylesheets %}
+    {{ super() }}
+{% endblock stylesheets %}
+
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                IEU:
+                <small>{%if agregar %}Agregar{% else %}Editar{% endif %} Sub Tipo de Institución de Educación Universitaria</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Resumen LOEU</a></li>
+                <li><a href="{{ url('oeu:listar-tipo-ieu') }}">Tipo IEU</a></li>
+                <li><a href="{{ url('oeu:listar-sub-tipo-ieu') }}"> SubTipo IEU</a></li>
+                <li class="active">{%if agregar %}Agregar{% else %}Editar{% endif %}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            {% if get_messages(request) %}
+                {% for message in get_messages(request) %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {% if message.tags == 'error' %}
+                            <h4><i class="icon fa fa-ban"></i> ¡Alerta!</h4>
+                        {% elif message.tags == 'warning' %}
+                            <h4><i class="icon fa fa-warning"></i> ¡Cuidado!</h4>
+                        {% elif message.tags == 'success' %}
+                            <h4><i class="icon fa fa-check"></i> ¡Exito!</h4>
+                        {% elif message.tags == 'info' %}
+                            <h4><i class="icon fa fa-info"></i> ¡Atención!</h4>
+                        {% endif %}
+                        {{ message|safe }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            {% if form.errors %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-ban"></i> ¡Alerta!</h4>
+                    {% for error in form.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="box box-info">
+                        <div class="box-header">
+                            Tipo IEU valores públicados
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            {% if object %}
+                                <dl class="dl-horizontal">
+                                    <dt>Tipo de IEU:</dt>
+                                    <dd>{{ object.tipo_ieu }}</dd>
+                                    <dt>Sub Tipo de IEU:</dt>
+                                    <dd>{{ object.nombre }}</dd>
+                                    <dt>Orden:</dt>
+                                    <dd>{{ object.orden }}</dd>
+                                    <dt>Revisor(es):</dt>
+                                    <dd>
+                                        {% for revisor in object.revisor.all() %}
+                                            {% if loop.index == 1 %}
+                                                {% set color = 'bg-green' %}
+                                            {% elif loop.index == 2 %}
+                                                {% set color = 'bg-blue' %}
+                                            {% elif loop.index == 3 %}
+                                                {% set color = 'bg-yellow' %}
+                                            {% elif loop.index == 4 %}
+                                                {% set color = 'bg-red' %}
+                                            {% elif loop.index == 5 %}
+                                                {% set color = 'bg-purple' %}
+                                            {% elif loop.index == 6 %}
+                                                {% set color = 'bg-orange' %}
+                                            {% endif %}
+                                            <small class="label {{ color }}">{{ revisor }}</small>
+                                        {% endfor %}
+                                    </dd>
+                                    <dt>Editor:</dt>
+                                    {% if object.editor %}
+                                    <dd><small class="label bg-maroon">{{ object.editor }}</small></dd>
+                                    {% endif %}
+                                </dl>
+                            {% endif %}
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <div class="col-lg-6">
+                    <form class="form-horizontal" role="form" {% if agregar %}action="{{ url('oeu:agregar-sub-tipo-ieu') }}"{% else %}action="{{ url('oeu:editar-sub-tipo-ieu', args=[object.pk]) }}"{% endif %} method="post">
+                        <div class="box box-warning">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                            <div class="box-header">
+                                Tipo IEU valores en revisión
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                {% for field in form %}
+                                    {% if field.name != 'cod_activacion' and field.name != 'publicar' and field.name != 'editor' %}
+                                        <div class="form-group">
+                                            <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">{{ field.label }}</label>
+                                            <div class="col-sm-9">
+                                                {{ field }}
+                                            </div>
+                                            <span class="help-block">
+                                                {% for error in field.errors %}
+                                                    <ul>
+                                                        <li class="text-red">{{ error }}</li>
+                                                    </ul>
+                                                {% endfor %}
+                                            </span>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if 'EditorOEU' is in_user_group(request.user) and not agregar %}
+                                    <div class="form-group">
+                                        <label for="{{ form.cod_activacion.id_for_label }}" class="col-sm-3 control-label">Estado</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="{{ form.cod_activacion.name }}" id="{{ form.cod_activacion.id_for_label }}" value="True" {% if activo == True%} checked{% endif %}>
+                                                        Activo
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="{{ form.cod_activacion.name }}" id="{{ form.cod_activacion.id_for_label }}" value="False" {% if activo == False %} checked{% endif %}>
+                                                        Inactivo
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <span class="help-block">
+                                                {% for error in form.cod_activacion.errors %}
+                                                    <ul>
+                                                        <li class="text-red">{{ error }}</li>
+                                                    </ul>
+                                                {% endfor %}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="{{ form.publicar.id_for_label }}" class="col-sm-3 control-label">Publicar</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" name="{{ form.publicar.name }}" id="{{ form.publicar.id_for_label }}">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <span class="help-block">
+                                                {% for error in form.publicar.errors %}
+                                                    <ul>
+                                                        <li class="text-red">{{ error }}</li>
+                                                    </ul>
+                                                {% endfor %}
+                                            </span>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if not agregar %}
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Revisor(es)</label>
+                                        <div class="col-sm-9"><br>
+                                            {% if object %}
+                                                {% for revisor in object.revisor_edit.all() %}
+                                                    {% if loop.index == 1 %}
+                                                        {% set color = 'bg-green' %}
+                                                    {% elif loop.index == 2 %}
+                                                        {% set color = 'bg-blue' %}
+                                                    {% elif loop.index == 3 %}
+                                                        {% set color = 'bg-yellow' %}
+                                                    {% elif loop.index == 4 %}
+                                                        {% set color = 'bg-red' %}
+                                                    {% elif loop.index == 5 %}
+                                                        {% set color = 'bg-purple' %}
+                                                    {% elif loop.index == 6 %}
+                                                        {% set color = 'bg-orange' %}
+                                                    {% endif %}
+                                                    <small class="label {{ color }}">{{ revisor }}</small>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-primary pull-right">{%if agregar %}Agregar{% else %}Editar{% endif %}</button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </div>
+                        <!-- /.box -->
+                        <div class="box box-success">
+                            <div class="box-header">
+                                Soportes Formales de Cambios
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                {{ sfc_form.management_form }}
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Soporte Forma de Cambio</th>
+                                            <th class="text-center">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    {% for form in sfc_form.forms %}
+                                        <tr class="formset_sfc">
+                                            {% for field in form.visible_fields() %}
+                                                <td class="text-center">
+                                                    {% if loop.first %}
+                                                        {% for hidden in form.hidden_fields() %}
+                                                            {{ hidden }}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                    {{ field.errors }}
+                                                    {{ field }}
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </form>
+                </div>
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+{% endblock content %}
+
+{% block javascripts %}
+    {{ super() }}
+    <!-- Auto Complete Light -->
+    <script type="text/javascript" src="{{ static('autocomplete_light/jquery.init.js') }}"></script>
+    <script type="text/javascript" src="{{ static('autocomplete_light/autocomplete.init.js') }}"></script>
+    <script type="text/javascript" src="{{ static('autocomplete_light/vendor/select2/dist/js/select2.full.js') }}"></script>
+    <script type="text/javascript" src="{{ static('autocomplete_light/select2.js') }}"></script>
+    <script src="{{ static('formset/jquery.formset.js') }}"></script>
+    <script type="text/javascript">
+        $('.formset_sfc').formset({
+            addText: 'Agregar SFC',
+            deleteText: 'Eliminar',
+            prefix: 'tipoinstitucionsfc_set'
+        });
+    </script>
+{% endblock javascripts %}
